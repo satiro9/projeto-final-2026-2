@@ -48,18 +48,29 @@
     <div class="container">
       <h2>Catálogo</h2>
       <p class="subtitle">Use os filtros para encontrar o ideal</p>
-      <div class="filtros" id="filtros"><button class="filtro-btn" data-filtro="Todos">Todos</button><button class="filtro-btn" data-filtro="Cão Grande">Cão Grande</button><button class="filtro-btn" data-filtro="Cobras">Cobras</button><button class="filtro-btn" data-filtro="Hamster">Hamster</button></div>
+      <div class="filtros" id="filtros"><button class="filtro-btn" data-filtro="Todos">Todos</button><button class="filtro-btn" data-filtro="Cão Grande">Cão Grande</button><button class="filtro-btn" data-filtro="Cobras">Cobras</button><button class="filtro-btn" data-filtro="Gato">Gato</button><button class="filtro-btn" data-filtro="Macaco">Macaco</button><button class="filtro-btn" data-filtro="Hamster">Hamster</button><button class="filtro-btn" data-filtro="Calopsita">Calopsita</button><button class="filtro-btn" data-filtro="Coelho">Coelho</button></div>
       <div class="catalogo" id="lista"></div>
     </div>
   </section>
 
-  <footer><p>© <span id="ano"></span> Adote um Amigo - Adoção de Pets</p></footer>
 
   <!-- Dados do catálogo embarcados (em projetos reais viria de uma API) -->
   <script>
     window.ITENS = [{"nome": "Thor", "categoria": "Cão Grande", "preco": "3 anos", "emoji": "🐕"}, {"nome": "Mimi", "categoria": "Gato", "preco": "2 anos", "emoji": "🐈"}, {"nome": "Luna", "categoria": "Cobras", "preco": "1 ano", "emoji": "🐍"}, {"nome": "Simba", "categoria": "Macaco", "preco": "5 anos", "emoji": "🐵"}, {"nome": "Nino", "categoria": "Hamster", "preco": "4 anos", "emoji": "🐹"}, {"nome": "Cacau", "categoria": "Calopsita", "preco": "6 meses", "emoji": "🐦"}, {"nome": "Fred", "categoria": "Coelho", "preco": "3 anos", "emoji": ".🐰"},];
     window.LABEL_PRECO = "Idade:";
+    
   </script>
   <script src="script.js"></script>
 </body>
 </html>
+<section id="contato" style="background:#fff;">
+    <div class="container">
+      <h2>Contato</h2>
+      <form class="contact" id="formContato" novalidate>
+        <div><label for="nome">Nome</label><input id="nome" required /></div>
+        <div><label for="email">E-mail</label><input id="email" type="email" required /></div>
+        <div><label for="mensagem">Mensagem</label><textarea id="mensagem" rows="3"></textarea></div>
+        <button type="submit" class="btn primary">Enviar</button>
+        <div class="mensagem-feedback" id="feedback"></div>
+
+        <footer><p>© <span id="ano"></span> Adote um Amigo - Adoção de Pets</p></footer>
