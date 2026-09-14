@@ -63,7 +63,9 @@ function moeda(v) {
 function renderizarProdutos() {
   listaProdutos.innerHTML = window.PRODUTOS.map(p => `
     <article class="produto">
-      <div class="img">${p.emoji}</div>
+      <div class="img">
+        <img src="${p.imagem}" alt="${p.nome}">
+      </div>
       <h3>${p.nome}</h3>
       <p>${p.desc}</p>
       <div class="preco">${moeda(p.preco)}</div>
@@ -105,9 +107,12 @@ function atualizarCarrinho() {
     total += sub;
     return `
       <div class="item-c">
-        <div>
-          <strong>${p.emoji} ${p.nome}</strong><br/>
-          <small>${carrinho[id]} × ${moeda(p.preco)} = ${moeda(sub)}</small>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <img src="${p.imagem}" alt="${p.nome}" style="width:36px;height:36px;object-fit:cover;border-radius:6px;">
+          <div>
+            <strong>${p.nome}</strong><br/>
+            <small>${carrinho[id]} × ${moeda(p.preco)} = ${moeda(sub)}</small>
+          </div>
         </div>
         <button class="remover" onclick="remover(${p.id})" title="Remover">✕</button>
       </div>
