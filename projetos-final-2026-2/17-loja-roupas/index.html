@@ -10,13 +10,20 @@
   <style>
     .produtos { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; }
     .produto {
-      background:#fff; padding:20px; border-radius:var(--radius);
-      box-shadow:var(--shadow); text-align:center;
+      background:#fff; padding:20px; border-radius:var(--radius, 8px);
+      box-shadow:var(--shadow, 0 4px 6px rgba(0,0,0,0.1)); text-align:center;
     }
-    .produto .img { font-size:3.5rem; margin-bottom:10px; }
-    .produto .preco { font-weight:800; color:var(--primary); font-size:1.2rem; margin:8px 0; }
+    /* Estilização corrigida para as imagens dos produtos */
+    .produto img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+    .produto .preco { font-weight:800; color:var(--primary, #e11d48); font-size:1.2rem; margin:8px 0; }
     .produto button {
-      background:var(--primary); color:#fff; border:0; padding:10px 16px;
+      background:var(--primary, #e11d48); color:#fff; border:0; padding:10px 16px;
       border-radius:8px; cursor:pointer; font-weight:600;
     }
     .produto button:hover { opacity:.9; }
@@ -24,9 +31,9 @@
     /* Carrinho lateral (drawer) */
     .carrinho-icone {
       position:fixed; bottom:20px; right:20px;
-      background:var(--primary); color:#fff; padding:14px 18px;
+      background:var(--primary, #e11d48); color:#fff; padding:14px 18px;
       border-radius:999px; cursor:pointer; font-weight:700;
-      box-shadow:var(--shadow); z-index:60; border:0;
+      box-shadow:var(--shadow, 0 4px 6px rgba(0,0,0,0.1)); z-index:60; border:0;
     }
     .drawer {
       position:fixed; top:0; right:-380px; width:360px; max-width:90vw; height:100vh;
@@ -34,9 +41,9 @@
       transition: right .3s ease; z-index:70; display:flex; flex-direction:column;
     }
     .drawer.aberto { right:0; }
-    .drawer header { background:var(--primary); color:#fff; padding:18px; display:flex; justify-content:space-between; align-items:center; }
+    .drawer header { background:var(--primary, #e11d48); color:#fff; padding:18px; display:flex; justify-content:space-between; align-items:center; }
     .drawer .itens { flex:1; overflow-y:auto; padding:16px; }
-    .drawer .item-c { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #eee; }
+    .drawer .item-c { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #eee; align-items: center; }
     .drawer footer { padding:18px; border-top:1px solid #eee; background:#fff; color:#111; }
     .remover { background:transparent; border:0; color:#dc2626; cursor:pointer; font-size:1.1rem; }
   </style>
@@ -99,12 +106,71 @@
     </footer>
   </aside>
 
-  <footer><p>© <span id="ano"></span> ZARÁ Boutique - Loja de Roupas</p></footer>
+  <footer><p>© <span id="ano"></span> MLP Boutique - Loja de Roupas</p></footer>
 
   <script>
-    window.PRODUTOS = [{"id": 1, "nome": "Camiseta Básica", "desc": "100% algodão", "preco": 59.9, "emoji": "👕"}, {"id": 2, "nome": "Vestido Verão", "desc": "Tecido leve", "preco": 129.9, "emoji": "👗"}, {"id": 3, "nome": "Calça Jeans", "desc": "Skinny clássica", "preco": 159.9, "emoji": "👖"}, {"id": 4, "nome": "Jaqueta", "desc": "Couro sintético", "preco": 249.9, "emoji": "🧥"}, {"id": 5, "nome": "Tênis Branco", "desc": "Casual unissex", "preco": 189.9, "emoji": "👟"}, {"id": 6, "nome": "Bolsa", "desc": "Couro ecológico", "preco": 139.9, "emoji": "👜"}, {"id": 7, "nome": "Camiseta Polo", "desc": "100% algodão", "preco": 149.9, "emoji": "👔"},{"id": 8, "nome": "Biquini", "desc": "50% poliester", "preco": 59.9, "emoji": "👙"}];
+    // Definição das configurações globais que faltavam
     window.MOEDA = "R$";
     window.CTA = "Adicionar";
+
+    window.PRODUTOS = [
+      {
+        "id": 1,
+        "nome": "Camiseta Básica",
+        "desc": "100% algodão",
+        "preco": 59.9,
+        "imagem": "imagem/img1.jpg"
+      },
+      {
+        "id": 2,
+        "nome": "Vestido Verão",
+        "desc": "Tecido leve",
+        "preco": 129.9,
+        "imagem": "imagem/img2.jpg"
+      },
+      {
+        "id": 3,
+        "nome": "Calça Jeans",
+        "desc": "Skinny clássica",
+        "preco": 159.9,
+        "imagem": "imagem/img3.jpg"
+      },
+      {
+        "id": 4,
+        "nome": "Jaqueta",
+        "desc": "Couro sintético",
+        "preco": 249.9,
+        "imagem": "imagem/img4.jpg"
+      },
+      {
+        "id": 5,
+        "nome": "Tênis Branco",
+        "desc": "Casual unissex",
+        "preco": 189.9,
+        "imagem": "imagem/img5.jpg"
+      },
+      {
+        "id": 6,
+        "nome": "Bolsa",
+        "desc": "Couro ecológico",
+        "preco": 139.9,
+        "imagem": "imagem/img6.jpg"
+      },
+      {
+        "id": 7,
+        "nome": "Camiseta Polo",
+        "desc": "100% algodão",
+        "preco": 149.9,
+        "imagem": "imagem/img7.jpg"
+      },
+      {
+        "id": 8,
+        "nome": "Biquíni",
+        "desc": "50% poliéster",
+        "preco": 59.9,
+        "imagem": "imagem/img8.jpg"
+      }
+    ];
   </script>
   <script src="script.js"></script>
 </body>

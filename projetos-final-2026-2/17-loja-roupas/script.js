@@ -1,4 +1,3 @@
-
 // ========= Comum: menu mobile, ano no rodapé =========
 document.addEventListener('DOMContentLoaded', () => {
   // Preenche o ano automaticamente no footer
@@ -59,11 +58,12 @@ function moeda(v) {
   return window.MOEDA + ' ' + v.toFixed(2).replace('.', ',');
 }
 
-// Renderiza os produtos disponíveis
+// Renderiza os produtos disponíveis (Corrigido ${p.imagem} em vez de ${produto.imagem})
 function renderizarProdutos() {
+  if (!listaProdutos) return;
   listaProdutos.innerHTML = window.PRODUTOS.map(p => `
     <article class="produto">
-      <div class="img">${p.emoji}</div>
+      <img src="${p.imagem}" alt="${p.nome}">
       <h3>${p.nome}</h3>
       <p>${p.desc}</p>
       <div class="preco">${moeda(p.preco)}</div>
@@ -106,7 +106,7 @@ function atualizarCarrinho() {
     return `
       <div class="item-c">
         <div>
-          <strong>${p.emoji} ${p.nome}</strong><br/>
+          <strong>${p.nome}</strong><br/>
           <small>${carrinho[id]} × ${moeda(p.preco)} = ${moeda(sub)}</small>
         </div>
         <button class="remover" onclick="remover(${p.id})" title="Remover">✕</button>
@@ -117,8 +117,14 @@ function atualizarCarrinho() {
 }
 
 // Abrir / fechar drawer
-document.getElementById('abrirCarrinho').addEventListener('click', () => drawer.classList.add('aberto'));
-function fecharCarrinho() { drawer.classList.remove('aberto'); }
+const abrirCarrinhoBtn = document.getElementById('abrirCarrinho');
+if (abrirCarrinhoBtn) {
+  abrirCarrinhoBtn.addEventListener('click', () => drawer.classList.add('aberto'));
+}
+
+function fecharCarrinho() { 
+  if (drawer) drawer.classList.remove('aberto'); 
+}
 
 function finalizarPedido() {
   if (Object.keys(carrinho).length === 0) {
@@ -133,3 +139,4 @@ function finalizarPedido() {
 
 renderizarProdutos();
 atualizarCarrinho();
+
