@@ -1,197 +1,390 @@
-/* =========================================================
-   Dra. Helena Costa - Psicóloga
-   Folha de estilos principal.
-   Conceitos: variáveis CSS, seletores, flexbox, grid,
-   responsividade, transições e hover.
-   ========================================================= */
-
-/* Variáveis (Custom Properties) — facilitam manter o tema */
+/* ==========================================================================
+   CONFIGURAÇÕES GERAIS E VARIÁVEIS (CORES ORIGINAIS)
+   ========================================================================== */
 :root {
-  --primary: #6b3fa0;
-  --accent: #d6c4ec;
-  --bg: #faf7ff;
-  --text: #1f2937;
-  --muted: #6b7280;
-  --card: #ffffff;
-  --radius: 14px;
-  --shadow: 0 10px 30px rgba(0,0,0,.08);
-  --container: 1100px;
+  --primary-color: #e63946;
+  --primary-hover: #c82333;
+  --whatsapp-color: #25d366;
+  --whatsapp-hover: #20ba5a;
+  --dark-bg: #1a1a1a;
+  --dark-footer-bottom: #111111;
+  --text-dark: #2b2d42;
+  --text-light: #f8f9fa;
+  --text-muted: #888888;
+  --bg-light: #f4f6f8;
+  --border-color: #e0e0e0;
 }
 
-/* Reset simples para padronizar entre navegadores */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-html { scroll-behavior: smooth; } /* rolagem suave para âncoras */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 body {
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  background: var(--bg);
-  color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--text-dark);
+  background-color: #ffffff;
   line-height: 1.6;
 }
 
-img { max-width: 100%; display: block; }
+/* ==========================================================================
+   TIPOGRAFIA (FONTE ORIGINAL SURFER NOS TÍTULOS)
+   ========================================================================== */
+h1, h2, h3, h4, .logo, .footer-logo {
+  font-family: 'Original Surfer', cursive, sans-serif;
+  font-weight: 400;
+  line-height: 1.2;
+}
 
-/* Container central reutilizável */
+/* ==========================================================================
+   CONTAINER E ESTRUTURA
+   ========================================================================== */
 .container {
-  max-width: var(--container);
+  max-width: 1100px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
-/* ---------- HEADER / NAV ---------- */
-header.site-header {
-  background: var(--primary);
-  color: #fff;
-  position: sticky; /* fixa ao rolar */
-  top: 0;
-  z-index: 50;
-  box-shadow: var(--shadow);
+section {
+  padding: 60px 0;
 }
+
+.subtitle {
+  color: #666;
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+h2 {
+  text-align: center;
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  color: var(--text-dark);
+}
+
+/* ==========================================================================
+   CABEÇALHO (HEADER) E NAVEGAÇÃO
+   ========================================================================== */
+.site-header {
+  background-color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
 .nav {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 16px 20px;
-  max-width: var(--container);
+  align-items: center;
+  max-width: 1100px;
   margin: 0 auto;
+  padding: 15px 20px;
 }
-.nav .logo { font-weight: 800; font-size: 1.25rem; letter-spacing: .5px; }
-.nav ul { display: flex; gap: 22px; list-style: none; }
-.nav a { color: #fff; text-decoration: none; opacity: .9; transition: opacity .2s; }
-.nav a:hover { opacity: 1; text-decoration: underline; }
 
-/* botão hambúrguer (mobile) */
+.logo {
+  font-size: 1.4rem;
+  color: var(--text-dark);
+}
+
+#menu {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+}
+
+#menu a {
+  text-decoration: none;
+  color: var(--text-dark);
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+#menu a:hover {
+  color: var(--primary-color);
+}
+
 .menu-toggle {
   display: none;
-  background: transparent;
-  border: 0;
-  color: #fff;
-  font-size: 1.6rem;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
   cursor: pointer;
 }
 
-/* ---------- HERO ---------- */
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
 .hero {
-  background: linear-gradient(135deg, var(--primary), var(--accent));
-  color: #fff;
-  padding: 80px 20px;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
+  color: var(--text-light);
   text-align: center;
+  padding: 100px 20px;
 }
-.hero h1 { font-size: clamp(1.8rem, 4vw, 3rem); margin-bottom: 14px; }
-.hero p { font-size: 1.1rem; max-width: 640px; margin: 0 auto 26px; opacity: .95; }
 
-/* botão reutilizável */
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  max-width: 650px;
+  margin: 0 auto 30px auto;
+  color: #e0e0e0;
+}
+
+/* Botões */
 .btn {
   display: inline-block;
-  background: #fff;
-  color: var(--primary);
-  padding: 12px 26px;
-  border-radius: 999px;
+  padding: 12px 28px;
+  border-radius: 6px;
   text-decoration: none;
-  font-weight: 700;
-  border: 0;
+  font-weight: 600;
   cursor: pointer;
-  transition: transform .15s ease, box-shadow .15s ease;
-}
-.btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
-.btn.primary { background: var(--primary); color: #fff; }
-
-/* ---------- SEÇÕES ---------- */
-section { padding: 70px 0; }
-section h2 {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 10px;
-  color: var(--primary);
-}
-section .subtitle {
-  text-align: center;
-  color: var(--muted);
-  margin-bottom: 40px;
+  border: none;
+  transition: all 0.3s ease;
 }
 
-/* Grid de cards reutilizável */
+.btn-whatsapp {
+  background-color: var(--whatsapp-color);
+  color: #ffffff;
+}
+
+.btn-whatsapp:hover {
+  background-color: var(--whatsapp-hover);
+  transform: translateY(-2px);
+}
+
+.btn.primary {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+.btn.primary:hover {
+  background-color: var(--primary-hover);
+}
+
+/* ==========================================================================
+   SERVIÇOS (CARDS)
+   ========================================================================== */
+#servicos {
+  background-color: var(--bg-light);
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 22px;
+  gap: 25px;
+  margin-top: 20px;
 }
-.card {
-  background: var(--card);
-  border-radius: var(--radius);
-  padding: 24px;
-  box-shadow: var(--shadow);
-  transition: transform .2s;
-}
-.card:hover { transform: translateY(-6px); }
-.card .icon { font-size: 2.2rem; margin-bottom: 10px; }
-.card h3 { color: var(--primary); margin-bottom: 8px; }
-.card p { color: var(--muted); font-size: .95rem; }
 
-/* ---------- FORMULÁRIO ---------- */
-form.contact {
-  max-width: 560px;
-  margin: 0 auto;
-  background: var(--card);
-  padding: 30px;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  display: grid;
-  gap: 14px;
+.card {
+  background: #ffffff;
+  padding: 30px 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-form.contact label { font-weight: 600; font-size: .9rem; }
-form.contact input,
-form.contact select,
-form.contact textarea {
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card .icon {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+}
+
+.card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+.card p {
+  color: #666;
+  font-size: 0.95rem;
+}
+
+/* ==========================================================================
+   CONTATO (FORMULÁRIO)
+   ========================================================================== */
+#contato {
+  background-color: var(--bg-light);
+}
+
+.contact {
+  max-width: 600px;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.contact div {
+  margin-bottom: 20px;
+}
+
+.contact label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.contact input,
+.contact textarea {
   width: 100%;
-  padding: 12px 14px;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
   font-family: inherit;
   font-size: 1rem;
-  transition: border-color .2s, box-shadow .2s;
 }
-form.contact input:focus,
-form.contact textarea:focus,
-form.contact select:focus {
+
+.contact input:focus,
+.contact textarea:focus {
   outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 20%, transparent);
+  border-color: var(--primary-color);
 }
 
-.mensagem-feedback {
-  margin-top: 14px;
-  padding: 12px;
-  border-radius: 10px;
-  background: #ecfdf5;
-  color: #065f46;
+/* ==========================================================================
+   RODAPÉ (FOOTER) MODERNO
+   ========================================================================== */
+.site-footer {
+  background-color: var(--dark-bg);
+  color: #d1d1d1;
+  padding-top: 50px;
+  font-size: 0.95rem;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  padding-bottom: 40px;
+}
+
+.footer-col h3.footer-logo {
+  color: #ffffff;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.footer-col h4 {
+  color: #ffffff;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  border-bottom: 2px solid var(--primary-color);
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.footer-col ul {
+  list-style: none;
+}
+
+.footer-col ul li {
+  margin-bottom: 10px;
+}
+
+.footer-col a {
+  color: #d1d1d1;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-col a:hover {
+  color: var(--whatsapp-color);
+}
+
+.footer-col p {
+  margin-bottom: 10px;
+}
+
+.footer-col i {
+  margin-right: 8px;
+  color: var(--whatsapp-color);
+}
+
+.footer-bottom {
+  background-color: var(--dark-footer-bottom);
   text-align: center;
-  display: none;
+  padding: 20px 0;
+  border-top: 1px solid #2a2a2a;
 }
-.mensagem-feedback.erro { background: #fef2f2; color: #991b1b; }
 
-/* ---------- FOOTER ---------- */
-footer {
-  background: #111827;
-  color: #d1d5db;
+.footer-bottom p {
+  margin: 4px 0;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   BOTÃO FLUTUANTE DO WHATSAPP
+   ========================================================================== */
+.whatsapp-float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 25px;
+  right: 25px;
+  background-color: var(--whatsapp-color);
+  color: #ffffff;
+  border-radius: 50px;
   text-align: center;
-  padding: 30px 20px;
-  margin-top: 40px;
+  font-size: 32px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
-footer a { color: var(--accent); text-decoration: none; }
 
-/* ---------- RESPONSIVO ---------- */
-@media (max-width: 720px) {
-  .nav ul {
-    display: none;
-    position: absolute;
-    top: 60px; left: 0; right: 0;
-    flex-direction: column;
-    background: var(--primary);
-    padding: 14px 20px;
-    gap: 12px;
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  background-color: var(--whatsapp-hover);
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE (DISPOSITIVOS MÓVEIS)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
   }
-  .nav ul.open { display: flex; }
-  .menu-toggle { display: block; }
+
+  #menu {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  #menu.active {
+    display: flex;
+  }
+
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+
+  .whatsapp-float {
+    width: 50px;
+    height: 50px;
+    font-size: 26px;
+    bottom: 20px;
+    right: 20px;
+  }
 }

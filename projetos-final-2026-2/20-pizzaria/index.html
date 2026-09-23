@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Napoli Pizzaria — Catálogo com carrinho (JavaScript) -->
+<!-- Napoli Pizzaria — Catálogo com carrinho e cupom de desconto (JavaScript) -->
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
@@ -8,16 +8,34 @@
   <meta name="description" content="Cardápio interativo com pedido (carrinho JS)." />
   <link rel="stylesheet" href="styles.css" />
   <style>
+    :root {
+      --primary: #e63946;
+      --radius: 8px;
+      --shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f8f9fa;
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+    
     .produtos { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; }
     .produto {
       background:#fff; padding:20px; border-radius:var(--radius);
       box-shadow:var(--shadow); text-align:center;
+      display: flex; flex-direction: column; justify-content: space-between;
     }
-    .produto .img { font-size:3.5rem; margin-bottom:10px; }
+    .produto img { width:100%; height:160px; object-fit:cover; border-radius:6px; margin-bottom:10px; }
+    .produto h3 { margin: 10px 0 5px; font-size: 1.2rem; }
+    .produto p { color: #666; font-size: 0.9rem; margin-bottom: 10px; }
     .produto .preco { font-weight:800; color:var(--primary); font-size:1.2rem; margin:8px 0; }
     .produto button {
       background:var(--primary); color:#fff; border:0; padding:10px 16px;
-      border-radius:8px; cursor:pointer; font-weight:600;
+      border-radius:8px; cursor:pointer; font-weight:600; transition: opacity .2s;
     }
     .produto button:hover { opacity:.9; }
 
@@ -36,9 +54,166 @@
     .drawer.aberto { right:0; }
     .drawer header { background:var(--primary); color:#fff; padding:18px; display:flex; justify-content:space-between; align-items:center; }
     .drawer .itens { flex:1; overflow-y:auto; padding:16px; }
-    .drawer .item-c { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #eee; }
+    .drawer .item-c { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid #eee; }
     .drawer footer { padding:18px; border-top:1px solid #eee; background:#fff; color:#111; }
     .remover { background:transparent; border:0; color:#dc2626; cursor:pointer; font-size:1.1rem; }
+
+    /* Estilos da Área de Cupom */
+    .cupom-container {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed #ddd;
+    }
+    .cupom-box {
+      display: flex;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .cupom-box input {
+      flex: 1;
+      padding: 8px 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .cupom-box button {
+      background: #333;
+      color: #fff;
+      border: 0;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .cupom-msg {
+      font-size: 0.82rem;
+      margin-top: 5px;
+      font-weight: 600;
+    }
+    .cupom-msg.sucesso { color: #16a34a; }
+    .cupom-msg.erro { color: #dc2626; }
+    
+    .linha-resumo {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      font-size: 0.95rem;
+    }
+    .linha-resumo.desconto {
+      color: #16a34a;
+      font-weight: 600;
+    }
+
+    /* Botão flutuante do WhatsApp */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 84px;
+      right: 20px;
+      width: 56px; height: 56px;
+      background: #25D366;
+      color: #fff;
+      border-radius: 50%;
+      display: grid; place-items: center;
+      box-shadow: 0 4px 14px rgba(0,0,0,.25);
+      z-index: 60;
+      text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
+      animation: wpp-pulse 2s infinite;
+    }
+    .whatsapp-float:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 18px rgba(0,0,0,.3);
+    }
+    .whatsapp-float svg { width: 30px; height: 30px; fill: #fff; }
+    @keyframes wpp-pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(37,211,102,.6), 0 4px 14px rgba(0,0,0,.25); }
+      70%  { box-shadow: 0 0 0 16px rgba(37,211,102,0), 0 4px 14px rgba(0,0,0,.25); }
+      100% { box-shadow: 0 0 0 0 rgba(37,211,102,0), 0 4px 14px rgba(0,0,0,.25); }
+    }
+
+    /* Rodapé */
+    .site-footer {
+      background: #1f1f1f;
+      color: #d4d4d4;
+      margin-top: 40px;
+    }
+    .footer-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 20px 32px;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1.3fr 1.2fr;
+      gap: 32px;
+    }
+    .footer-logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .footer-col h4 {
+      color: #fff;
+      font-size: 1rem;
+      margin: 0 0 14px;
+      position: relative;
+      padding-bottom: 8px;
+    }
+    .footer-col h4::after {
+      content: "";
+      position: absolute;
+      left: 0; bottom: 0;
+      width: 32px; height: 3px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+    .footer-col p,
+    .footer-col li {
+      font-size: .92rem;
+      line-height: 1.6;
+    }
+    .footer-col ul { list-style: none; margin: 0; padding: 0; }
+    .footer-col li { margin-bottom: 8px; }
+    .footer-col a {
+      color: #d4d4d4;
+      text-decoration: none;
+      transition: color .2s, padding-left .2s;
+    }
+    .footer-col a:hover { color: var(--primary); padding-left: 4px; }
+
+    .footer-social { display: flex; gap: 10px; margin-top: 14px; }
+    .footer-social a {
+      width: 38px; height: 38px;
+      display: grid; place-items: center;
+      background: #2f2f2f;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      transition: background .2s, transform .2s;
+    }
+    .footer-social a:hover {
+      background: var(--primary);
+      transform: translateY(-3px);
+      padding-left: 0;
+    }
+    .footer-social a.wpp:hover { background: #25D366; }
+
+    .footer-bottom {
+      border-top: 1px solid #333;
+      text-align: center;
+      padding: 18px 20px;
+      font-size: .85rem;
+      color: #999;
+    }
+    .footer-bottom p { margin: 0; }
+
+    @media (max-width: 800px) {
+      .footer-container { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 520px) {
+      .footer-container { grid-template-columns: 1fr; text-align: center; }
+      .footer-col h4::after { left: 50%; transform: translateX(-50%); }
+      .footer-social { justify-content: center; }
+    }
   </style>
 </head>
 <body>
@@ -55,12 +230,10 @@
   </header>
 
   <section class="hero" id="inicio">
-    <h1> Napoli Pizzaria</h1>
+    <h1>Napoli Pizzaria</h1>
     <p>Cardápio interativo com pedido (carrinho JS).</p>
     <a href="#produtos" class="btn">Ver cardápio</a>
   </section>
-
-
 
   <section id="produtos">
     <div class="container">
@@ -83,6 +256,13 @@
     </div>
   </section>
 
+  <!-- Botão flutuante do WhatsApp -->
+  <a href="#" class="whatsapp-float" id="whatsappBtn" target="_blank" rel="noopener noreferrer" aria-label="Fale conosco no WhatsApp" title="Fale conosco no WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
   <!-- Botão flutuante do carrinho -->
   <button class="carrinho-icone" id="abrirCarrinho">🛒 <span id="qtd-carrinho">0</span></button>
 
@@ -90,34 +270,310 @@
   <aside class="drawer" id="drawer">
     <header>
       <strong>Seu carrinho</strong>
-      <button onclick="fecharCarrinho()" style="background:transparent;border:0;color:#fff;font-size:1.4rem;cursor:pointer;">×</button>
+      <button id="fecharCarrinho" style="background:transparent;border:0;color:#fff;font-size:1.4rem;cursor:pointer;">×</button>
     </header>
     <div class="itens" id="carrinho-itens"></div>
     <footer>
-      <p style="display:flex;justify-content:space-between;font-weight:700;font-size:1.1rem;">
-        Total: <span id="total">R$ 0,00</span>
-      </p>
-      <button class="btn primary" style="width:100%;margin-top:10px;" onclick="finalizarPedido()">Finalizar pedido</button>
+      <!-- Área do Cupom de Desconto -->
+      <div class="cupom-container">
+        <label for="inputCupom" style="font-size:0.85rem; font-weight:600;">Cupom de Desconto:</label>
+        <div class="cupom-box">
+          <input type="text" id="inputCupom" placeholder="Ex: NAPOLI10" />
+          <button id="btnAplicarCupom">Aplicar</button>
+        </div>
+        <div class="cupom-msg" id="msgCupom"></div>
+      </div>
+
+      <hr style="margin: 12px 0; border:0; border-top:1px solid #eee;" />
+
+      <div class="linha-resumo">
+        <span>Subtotal:</span>
+        <span id="subtotal">R$ 0,00</span>
+      </div>
+      <div class="linha-resumo desconto" id="linhaDesconto" style="display:none;">
+        <span>Desconto:</span>
+        <span id="valorDesconto">- R$ 0,00</span>
+      </div>
+      <div class="linha-resumo" style="font-weight:700; font-size:1.1rem; margin-top:6px;">
+        <span>Total:</span>
+        <span id="total">R$ 0,00</span>
+      </div>
+      
+      <button class="btn primary" style="width:100%;margin-top:15px; padding:12px; border:0; border-radius:8px; background:var(--primary); color:#fff; font-weight:700; cursor:pointer;" id="btnFinalizar">Finalizar pedido via WhatsApp</button>
     </footer>
   </aside>
 
-  <footer><p>© <span id="ano"></span> Bella Napoli Pizzaria</p></footer>
+  <!-- Rodapé do site -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-col footer-brand">
+        <div class="footer-logo">🍕 Napoli Pizzaria</div>
+        <p>Massa artesanal, ingredientes frescos e muito sabor, direto do forno para a sua mesa.</p>
+      </div>
 
+      <div class="footer-col">
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="#inicio">Início</a></li>
+          <li><a href="#produtos">Cardápio</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <ul>
+          <li>📍 Rua Capanory, 76 – São Paulo, SP</li>
+          <li>📞 (11) 95843-6421</li>
+          <li>✉️ contato@napolipizzaria.com</li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Horário</h4>
+        <ul>
+          <li>Seg a Qui: 18h às 23h</li>
+          <li>Sex a Dom: 18h às 00h</li>
+        </ul>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram">📷</a>
+          <a href="#" aria-label="Facebook">📘</a>
+          <a href="#" class="wpp" id="whatsappRodape" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">💬</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="ano"></span> Napoli Pizzaria. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPT COMPLETO DO CARRINHO E CUPOM -->
   <script>
-  window.PRODUTOS = [
-    { "id": 1, "nome": "Margherita",          "desc": "Molho, mussarela, manjericão",              "preco": 45.0, "imagem": "imagem/img1.jpg" },
-    { "id": 2, "nome": "Calabresa",           "desc": "Calabresa fatiada e cebola",                 "preco": 48.0, "imagem": "imagem/img2.jpg" },
-    { "id": 3, "nome": "Portuguesa",          "desc": "Presunto, ovo, cebola, ervilha",             "preco": 52.0, "imagem": "imagem/img3.jpg" },
-    { "id": 4, "nome": "Quatro Queijos",      "desc": "Mussarela, provolone, parmesão, gorgonzola", "preco": 55.0, "imagem": "imagem/img4.jpg" },
-    { "id": 5, "nome": "Frango c/ Catupiry",  "desc": "Frango desfiado e catupiry",                 "preco": 50.0, "imagem": "imagem/img5.jpg" },
-    { "id": 6, "nome": "Chocolate",           "desc": "Doce com chocolate ao leite",                "preco": 42.0, "imagem": "imagem/img6.jpg" },
-    { "id": 7, "nome": "Carne Seca",          "desc": "Molho, cebola, carne seca",                  "preco": 50.0, "imagem": "imagem/img7.jpg" },
-    { "id": 8, "nome": "Coca-Cola",           "desc": "Refrigerante 2L",                            "preco": 15.0, "imagem": "imagem/img8.jpg" }
-  ];
+    window.PRODUTOS = [
+      { "id": 1, "nome": "Margherita",         "desc": "Molho, mussarela, manjericão",              "preco": 45.0, "imagem": "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=400&q=80" },
+      { "id": 2, "nome": "Calabresa",          "desc": "Calabresa fatiada e cebola",                 "preco": 48.0, "imagem": "https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&w=400&q=80" },
+      { "id": 3, "nome": "Portuguesa",         "desc": "Presunto, ovo, cebola, ervilha",             "preco": 52.0, "imagem": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=400&q=80" },
+      { "id": 4, "nome": "Quatro Queijos",     "desc": "Mussarela, provolone, parmesão, gorgonzola", "preco": 55.0, "imagem": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=400&q=80" },
+      { "id": 5, "nome": "Frango c/ Catupiry", "desc": "Frango desfiado e catupiry",                 "preco": 50.0, "imagem": "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=400&q=80" },
+      { "id": 6, "nome": "Chocolate",          "desc": "Doce com chocolate ao leite",                "preco": 42.0, "imagem": "https://images.unsplash.com/photo-1588315029754-2dd089d39a1a?auto=format&fit=crop&w=400&q=80" },
+      { "id": 7, "nome": "Carne Seca",         "desc": "Molho, cebola, carne seca",                  "preco": 50.0, "imagem": "https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?auto=format&fit=crop&w=400&q=80" },
+      { "id": 8, "nome": "Coca-Cola",          "desc": "Refrigerante 2L",                            "preco": 15.0, "imagem": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=400&q=80" }
+    ];
 
-  window.MOEDA = "R$";
-  window.CTA = "Adicionar ao pedido";
-</script>
-  <script src="script.js"></script>
+    window.MOEDA = "R$";
+    window.WHATSAPP_NUMERO = "5511958436421";
+    window.WHATSAPP_MENSAGEM = "Olá! Vim pelo site da Napoli Pizzaria e gostaria de tirar uma dúvida.";
+
+    // Cupons de desconto configurados (porcentagem ou valor fixo)
+    const CUPONS = {
+      "NAPOLI10": { tipo: "porcentagem", valor: 10 },
+      "PIZZA20": { tipo: "porcentagem", valor: 20 },
+      "PRIMEIRACOMPRA": { tipo: "fixo", valor: 15 }
+    };
+
+    let carrinho = [];
+    let cupomAtivo = null;
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("ano").textContent = new Date().getFullYear();
+      renderizarProdutos();
+      configurarLinksWhatsApp();
+      
+      // Eventos do Carrinho
+      document.getElementById("abrirCarrinho").addEventListener("click", abrirCarrinho);
+      document.getElementById("fecharCarrinho").addEventListener("click", fecharCarrinho);
+      document.getElementById("btnAplicarCupom").addEventListener("click", aplicarCupom);
+      document.getElementById("btnFinalizar").addEventListener("click", finalizarPedido);
+    });
+
+    function renderizarProdutos() {
+      const container = document.getElementById("produtos-lista");
+      container.innerHTML = "";
+      
+      window.PRODUTOS.forEach(p => {
+        const div = document.createElement("div");
+        div.className = "produto";
+        div.innerHTML = `
+          <img src="${p.imagem}" alt="${p.nome}" />
+          <div>
+            <h3>${p.nome}</h3>
+            <p>${p.desc}</p>
+          </div>
+          <div>
+            <div class="preco">${window.MOEDA} ${p.preco.toFixed(2).replace('.', ',')}</div>
+            <button onclick="adicionarAoCarrinho(${p.id})">Adicionar ao pedido</button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function adicionarAoCarrinho(id) {
+      const prod = window.PRODUTOS.find(p => p.id === id);
+      const itemExistente = carrinho.find(i => i.id === id);
+
+      if (itemExistente) {
+        itemExistente.qtd += 1;
+      } else {
+        carrinho.push({ ...prod, qtd: 1 });
+      }
+
+      atualizarCarrinho();
+      abrirCarrinho();
+    }
+
+    function removerDoCarrinho(id) {
+      carrinho = carrinho.filter(i => i.id !== id);
+      atualizarCarrinho();
+    }
+
+    function alterarQtd(id, delta) {
+      const item = carrinho.find(i => i.id === id);
+      if (item) {
+        item.qtd += delta;
+        if (item.qtd <= 0) {
+          removerDoCarrinho(id);
+        } else {
+          atualizarCarrinho();
+        }
+      }
+    }
+
+    function aplicarCupom() {
+      const input = document.getElementById("inputCupom");
+      const msg = document.getElementById("msgCupom");
+      const codigo = input.value.trim().toUpperCase();
+
+      if (!codigo) {
+        msg.className = "cupom-msg erro";
+        msg.textContent = "Digite um código de cupom.";
+        return;
+      }
+
+      if (CUPONS[codigo]) {
+        cupomAtivo = { codigo, ...CUPONS[codigo] };
+        msg.className = "cupom-msg sucesso";
+        msg.textContent = `Cupom ${codigo} aplicado com sucesso!`;
+        atualizarCarrinho();
+      } else {
+        msg.className = "cupom-msg erro";
+        msg.textContent = "Cupom inválido ou expirado.";
+      }
+    }
+
+    function atualizarCarrinho() {
+      const listaEl = document.getElementById("carrinho-itens");
+      const qtdEl = document.getElementById("qtd-carrinho");
+      const subtotalEl = document.getElementById("subtotal");
+      const valorDescontoEl = document.getElementById("valorDesconto");
+      const totalEl = document.getElementById("total");
+      const linhaDesconto = document.getElementById("linhaDesconto");
+
+      listaEl.innerHTML = "";
+      
+      let subtotal = 0;
+      let totalItens = 0;
+
+      if (carrinho.length === 0) {
+        listaEl.innerHTML = "<p style='text-align:center; color:#888; margin-top:20px;'>Seu carrinho está vazio.</p>";
+        cupomAtivo = null;
+        document.getElementById("msgCupom").textContent = "";
+        document.getElementById("inputCupom").value = "";
+      } else {
+        carrinho.forEach(item => {
+          subtotal += item.preco * item.qtd;
+          totalItens += item.qtd;
+
+          const itemEl = document.createElement("div");
+          itemEl.className = "item-c";
+          itemEl.innerHTML = `
+            <div>
+              <strong>${item.nome}</strong><br>
+              <small>${window.MOEDA} ${item.preco.toFixed(2).replace('.', ',')}</small>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <button onclick="alterarQtd(${item.id}, -1)" style="padding:2px 8px;">-</button>
+              <span>${item.qtd}</span>
+              <button onclick="alterarQtd(${item.id}, 1)" style="padding:2px 8px;">+</button>
+              <button class="remover" onclick="removerDoCarrinho(${item.id})" title="Remover">🗑️</button>
+            </div>
+          `;
+          listaEl.appendChild(itemEl);
+        });
+      }
+
+      // Cálculo do Desconto
+      let desconto = 0;
+      if (cupomAtivo && subtotal > 0) {
+        if (cupomAtivo.tipo === "porcentagem") {
+          desconto = (subtotal * cupomAtivo.valor) / 100;
+        } else if (cupomAtivo.tipo === "fixo") {
+          desconto = Math.min(cupomAtivo.valor, subtotal);
+        }
+        linhaDesconto.style.display = "flex";
+        valorDescontoEl.textContent = `- ${window.MOEDA} ${desconto.toFixed(2).replace('.', ',')}`;
+      } else {
+        linhaDesconto.style.display = "none";
+      }
+
+      const total = Math.max(0, subtotal - desconto);
+
+      qtdEl.textContent = totalItens;
+      subtotalEl.textContent = `${window.MOEDA} ${subtotal.toFixed(2).replace('.', ',')}`;
+      totalEl.textContent = `${window.MOEDA} ${total.toFixed(2).replace('.', ',')}`;
+    }
+
+    function abrirCarrinho() {
+      document.getElementById("drawer").classList.add("aberto");
+    }
+
+    function fecharCarrinho() {
+      document.getElementById("drawer").classList.remove("aberto");
+    }
+
+    function finalizarPedido() {
+      if (carrinho.length === 0) {
+        alert("Adicione pelo menos um item ao carrinho!");
+        return;
+      }
+
+      let mensagem = "*Pedido - Napoli Pizzaria*\n\n";
+      let subtotal = 0;
+
+      carrinho.forEach(item => {
+        const itemTotal = item.preco * item.qtd;
+        subtotal += itemTotal;
+        mensagem += `• ${item.qtd}x ${item.nome} - R$ ${itemTotal.toFixed(2).replace('.', ',')}\n`;
+      });
+
+      mensagem += `\n*Subtotal:* R$ ${subtotal.toFixed(2).replace('.', ',')}\n`;
+
+      let desconto = 0;
+      if (cupomAtivo) {
+        if (cupomAtivo.tipo === "porcentagem") {
+          desconto = (subtotal * cupomAtivo.valor) / 100;
+        } else if (cupomAtivo.tipo === "fixo") {
+          desconto = Math.min(cupomAtivo.valor, subtotal);
+        }
+        mensagem += `*Cupom (${cupomAtivo.codigo}):* - R$ ${desconto.toFixed(2).replace('.', ',')}\n`;
+      }
+
+      const total = Math.max(0, subtotal - desconto);
+      mensagem += `*Total do Pedido:* R$ ${total.toFixed(2).replace('.', ',')}\n\n`;
+      mensagem += "Gostaria de confirmar meu pedido e informar o endereço de entrega!";
+
+      const url = `https://wa.me/${window.WHATSAPP_NUMERO}?text=${encodeURIComponent(mensagem)}`;
+      window.open(url, "_blank");
+    }
+
+    function configurarLinksWhatsApp() {
+      const link = `https://wa.me/${window.WHATSAPP_NUMERO}?text=${encodeURIComponent(window.WHATSAPP_MENSAGEM)}`;
+      const btn = document.getElementById("whatsappBtn");
+      const rodape = document.getElementById("whatsappRodape");
+      if (btn) btn.href = link;
+      if (rodape) rodape.href = link;
+    }
+  </script>
 </body>
 </html>

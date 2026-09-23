@@ -2,7 +2,7 @@
 <!--
   Dra. Marina Silva - Psicóloga
   Projeto didático do curso de Web Design.
-  Estrutura: header, hero, serviços (cards), sobre, contato (form), footer.
+  Estrutura: header, hero, serviços (cards), sobre, galeria, contato (form), footer.
 -->
 <html lang="pt-BR">
 <head>
@@ -11,6 +11,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dra. Marina Silva - Psicóloga</title>
   <meta name="description" content="Site acolhedor com abordagens, agenda e contato." />
+
+  <!-- Fonte Original Surfer + Inter do Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Original+Surfer&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome para ícones modernos (WhatsApp, telefone, etc) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -24,6 +33,7 @@
         <li><a href="#inicio">Início</a></li>
         <li><a href="#servicos">Serviços</a></li>
         <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#galeria">Galeria</a></li>
         <li><a href="#contato">Contato</a></li>
       </ul>
     </div>
@@ -33,7 +43,9 @@
   <section class="hero" id="inicio">
     <h1>Dra. Marina Silva - Psicóloga</h1>
     <p>Site acolhedor com abordagens, agenda e contato. Atendimento profissional, humano e de qualidade.</p>
-    <a href="#contato" class="btn">Agende sua avaliação</a>
+    <a href="https://wa.me/5511958436421?text=Olá!%20Gostaria%20de%20agendar%20uma%20consulta." target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
+      <i class="fa-brands fa-whatsapp"></i> Agende sua avaliação
+    </a>
   </section>
 
   <!-- SERVIÇOS em formato de cards -->
@@ -69,18 +81,46 @@
   <!-- SOBRE -->
   <section id="sobre" style="background:#fff;">
     <div class="container">
-      <h2>Sobre nós</h2>
+      <h2>Sobre mim</h2>
       <p class="subtitle" style="max-width:720px; margin-left:auto; margin-right:auto;">
-         Um espaço seguro para você ser quem realmente é.Entendo a psicoterapia como um processo profundo de autodescoberta e cura, onde cada história é única e merece ser ouvida sem julgamentos. Meu objetivo é oferecer um ambiente de absoluto sigilo, respeito e empatia, caminhando ao seu lado na compreensão das suas emoções e na superação de desafios. Juntos, trabalhamos para que você desenvolva autonomia, fortaleça sua saúde mental e construa uma vida com mais leveza e significado.
+        Um espaço seguro para você ser quem realmente é. Entendo a psicoterapia como um processo profundo de autodescoberta e cura, onde cada história é única e merece ser ouvida sem julgamentos. Meu objetivo é oferecer um ambiente de absoluto sigilo, respeito e empatia, caminhando ao seu lado na compreensão das suas emoções e na superação de desafios. Juntos, trabalhamos para que você desenvolva autonomia, fortaleça sua saúde mental e construa uma vida com mais leveza e significado.
       </p>
+    </div>
+  </section>
+
+  <!-- GALERIA DE FOTOS (NOVA SEÇÃO) -->
+  <section id="galeria">
+    <div class="container">
+      <h2>Conheça nosso espaço</h2>
+      <p class="subtitle">Fotos do consultório e ambiente de atendimento</p>
+      
+      <div class="galeria-grid">
+        <!-- Foto 1 -->
+        <div class="galeria-item">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80" alt="Consultório acolhedor" />
+          <div class="galeria-legenda">Consultório Principal</div>
+        </div>
+
+        <!-- Foto 2 -->
+        <div class="galeria-item">
+          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" alt="Recepção" />
+          <div class="galeria-legenda">Recepção Acolhedora</div>
+        </div>
+
+        <!-- Foto 3 -->
+        <div class="galeria-item">
+          <img src="https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?auto=format&fit=crop&w=600&q=80" alt="Espaço de Atendimento" />
+          <div class="galeria-legenda">Espaço de Atendimento</div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- CONTATO com formulário -->
   <section id="contato">
     <div class="container">
-      <h2>Fale conosco</h2>
-      <p class="subtitle">Preencha e retornaremos em breve</p>
+      <h2>Fale comigo</h2>
+      <p class="subtitle">Preencha e retornarei em breve</p>
       <form class="contact" id="formContato" novalidate>
         <div>
           <label for="nome">Nome completo</label>
@@ -92,11 +132,11 @@
         </div>
         <div>
           <label for="telefone">Telefone / WhatsApp</label>
-          <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" />
+          <input type="tel" id="telefone" name="telefone" placeholder="(11) 95843-6421" />
         </div>
         <div>
           <label for="mensagem">Mensagem</label>
-          <textarea id="mensagem" name="mensagem" rows="4" required placeholder="Como podemos ajudar?"></textarea>
+          <textarea id="mensagem" name="mensagem" rows="4" required placeholder="Como posso ajudar você?"></textarea>
         </div>
         <button type="submit" class="btn primary">Enviar mensagem</button>
         <div class="mensagem-feedback" id="feedback"></div>
@@ -104,10 +144,49 @@
     </div>
   </section>
 
-  <footer>
-    <p>© <span id="ano"></span> Dra. Helena Costa - Psicóloga — Todos os direitos reservados.</p>
-    <p>Projeto educacional do curso de Web Design.</p>
+  <!-- RODAPÉ MODERNO -->
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-col">
+        <h3 class="footer-logo">🧠 Dra. Marina Silva</h3>
+        <p>Psicoterapia presencial e online. Um espaço seguro de escuta acolhedora, sigilo e autodescoberta.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="#inicio">Início</a></li>
+          <li><a href="#servicos">Serviços</a></li>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#galeria">Galeria</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Atendimento</h4>
+        <p><i class="fa-solid fa-phone"></i> (11) 95843-6421</p>
+        <p><i class="fa-brands fa-whatsapp"></i> <a href="https://wa.me/5511958436421" target="_blank" rel="noopener noreferrer">Agendar via WhatsApp</a></p>
+        <p><i class="fa-solid fa-clock"></i> Seg a Sex: 08h às 19h</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <p>© <span id="ano"></span> Dra. Marina Silva - Psicóloga — Todos os direitos reservados.</p>
+        <p><small>Projeto educacional do curso de Web Design.</small></p>
+      </div>
+    </div>
   </footer>
+
+  <!-- BOTÃO FLUTUANTE DO WHATSAPP -->
+  <a href="https://wa.me/5511958436421?text=Olá,%20Dra.%20Marina!%20Vim%20pelo%20site%20e%20gostaria%20de%20mais%20informações." 
+     class="whatsapp-float" 
+     target="_blank" 
+     rel="noopener noreferrer" 
+     aria-label="Falar no WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
 
   <script src="script.js"></script>
 </body>

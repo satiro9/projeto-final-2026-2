@@ -11,6 +11,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Oficina Mecânica TurboCar</title>
   <meta name="description" content="Página de serviços com agendamento de orçamento." />
+
+  <!-- Fonte Original Surfer + Inter do Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Original+Surfer&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome para ícones modernos (como o do WhatsApp) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -33,7 +42,9 @@
   <section class="hero" id="inicio">
     <h1>Oficina Mecânica TurboCar</h1>
     <p>Página de serviços com agendamento de orçamento. Atendimento profissional, humano e de qualidade.</p>
-    <a href="#contato" class="btn">Agende sua avaliação</a>
+    <a href="https://wa.me/5511958436421?text=Olá!%20Gostaria%20de%20agendar%20uma%20avaliação." target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
+      <i class="fa-brands fa-whatsapp"></i> Agende sua avaliação
+    </a>
   </section>
 
   <!-- SERVIÇOS em formato de cards -->
@@ -71,7 +82,7 @@
     <div class="container">
       <h2>Sobre nós</h2>
       <p class="subtitle" style="max-width:720px; margin-left:auto; margin-right:auto;">
-        Cuidando do seu carro como se fosse da nossa própria família.Na nossa oficina, acreditamos que mecânica vai muito além de trocar peças; trata-se de garantir a sua segurança e a de quem você ama. Com profissionais dedicados e um atendimento transparente, trabalhamos todos os dias para desmistificar a manutenção automotiva. Aqui, você tem a certeza de um diagnóstico honesto, preço justo e o cuidado que o seu veículo merece para rodar tranquilo e seguro.
+        Cuidando do seu carro como se fosse da nossa própria família. Na nossa oficina, acreditamos que mecânica vai muito além de trocar peças; trata-se de garantir a sua segurança e a de quem você ama. Com profissionais dedicados e um atendimento transparente, trabalhamos todos os dias para desmistificar a manutenção automotiva. Aqui, você tem a certeza de um diagnóstico honesto, preço justo e o cuidado que o seu veículo merece para rodar tranquilo e seguro.
       </p>
     </div>
   </section>
@@ -92,7 +103,7 @@
         </div>
         <div>
           <label for="telefone">Telefone / WhatsApp</label>
-          <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" />
+          <input type="tel" id="telefone" name="telefone" placeholder="(11) 95843-6421" />
         </div>
         <div>
           <label for="mensagem">Mensagem</label>
@@ -104,11 +115,50 @@
     </div>
   </section>
 
-  <footer>
-    <p>© <span id="ano"></span> Oficina Mecânica TurboCar — Todos os direitos reservados.</p>
-    <p>Projeto educacional do curso de Web Design.</p>
+  <!-- RODAPÉ MODERNO -->
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-col">
+        <h3 class="footer-logo">🔧 TurboCar</h3>
+        <p>Manutenção preventiva e corretiva com transparência, qualidade e foco na sua segurança.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="#inicio">Início</a></li>
+          <li><a href="#servicos">Serviços</a></li>
+          <li><a href="#sobre">Sobre Nós</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Atendimento</h4>
+        <p><i class="fa-solid fa-phone"></i> (11) 95843-6421</p>
+        <p><i class="fa-brands fa-whatsapp"></i> <a href="https://wa.me/5511958436421" target="_blank" rel="noopener noreferrer">Chame no WhatsApp</a></p>
+        <p><i class="fa-solid fa-clock"></i> Seg a Sex: 08h às 18h</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <p>© <span id="ano"></span> Oficina Mecânica TurboCar — Todos os direitos reservados.</p>
+        <p><small>Projeto educacional do curso de Web Design.</small></p>
+      </div>
+    </div>
   </footer>
+
+  <!-- BOTÃO FLUTUANTE DO WHATSAPP -->
+  <a href="https://wa.me/5511958436421?text=Olá!%20Vim%20pelo%20site%20e%20gostaria%20de%20mais%20informações." 
+     class="whatsapp-float" 
+     target="_blank" 
+     rel="noopener noreferrer" 
+     aria-label="Falar no WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
 
   <script src="script.js"></script>
 </body>
 </html>
+

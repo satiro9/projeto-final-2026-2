@@ -24,6 +24,118 @@
     .item-card .img img { max-width:100%; height:140px; object-fit:cover; border-radius:8px; }
     .item-card .preco { color:var(--primary); font-weight:800; font-size:1.2rem; margin-top:8px; }
     .vazio { text-align:center; color:var(--muted); padding:40px; }
+
+    /* Botão flutuante do WhatsApp */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 56px; height: 56px;
+      background: #25D366;
+      color: #fff;
+      border-radius: 50%;
+      display: grid; place-items: center;
+      box-shadow: 0 4px 14px rgba(0,0,0,.25);
+      z-index: 60;
+      text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
+      animation: wpp-pulse 2s infinite;
+    }
+    .whatsapp-float:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 18px rgba(0,0,0,.3);
+    }
+    .whatsapp-float svg { width: 30px; height: 30px; fill: #fff; }
+    @keyframes wpp-pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(37,211,102,.6), 0 4px 14px rgba(0,0,0,.25); }
+      70%  { box-shadow: 0 0 0 16px rgba(37,211,102,0), 0 4px 14px rgba(0,0,0,.25); }
+      100% { box-shadow: 0 0 0 0 rgba(37,211,102,0), 0 4px 14px rgba(0,0,0,.25); }
+    }
+
+    /* Rodapé */
+    .site-footer {
+      background: #1f1f1f;
+      color: #d4d4d4;
+      margin-top: 40px;
+      padding: 0;
+      text-align: left;
+    }
+    .footer-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 20px 32px;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1.3fr 1.2fr;
+      gap: 32px;
+    }
+    .footer-logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .footer-col h4 {
+      color: #fff;
+      font-size: 1rem;
+      margin: 0 0 14px;
+      position: relative;
+      padding-bottom: 8px;
+    }
+    .footer-col h4::after {
+      content: "";
+      position: absolute;
+      left: 0; bottom: 0;
+      width: 32px; height: 3px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+    .footer-col p,
+    .footer-col li {
+      font-size: .92rem;
+      line-height: 1.6;
+    }
+    .footer-col ul { list-style: none; margin: 0; padding: 0; }
+    .footer-col li { margin-bottom: 8px; }
+    .footer-col a {
+      color: #d4d4d4;
+      text-decoration: none;
+      transition: color .2s, padding-left .2s;
+    }
+    .footer-col a:hover { color: var(--primary); padding-left: 4px; }
+
+    .footer-social { display: flex; gap: 10px; margin-top: 14px; }
+    .footer-social a {
+      width: 38px; height: 38px;
+      display: grid; place-items: center;
+      background: #2f2f2f;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      transition: background .2s, transform .2s;
+    }
+    .footer-social a:hover {
+      background: var(--primary);
+      transform: translateY(-3px);
+      padding-left: 0;
+    }
+    .footer-social a.wpp:hover { background: #25D366; }
+
+    .footer-bottom {
+      border-top: 1px solid #333;
+      text-align: center;
+      padding: 18px 20px;
+      font-size: .85rem;
+      color: #999;
+    }
+    .footer-bottom p { margin: 0; }
+
+    @media (max-width: 800px) {
+      .footer-container { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 520px) {
+      .footer-container { grid-template-columns: 1fr; text-align: center; }
+      .footer-col h4::after { left: 50%; transform: translateX(-50%); }
+      .footer-social { justify-content: center; }
+    }
   </style>
 </head>
 <body>
@@ -76,8 +188,56 @@
     </div>
   </section>
 
-  <footer>
-    <p>© <span id="ano"></span> Adote um Amigo - Adoção de Pets</p>
+  <!-- Botão flutuante do WhatsApp -->
+  <a href="https://wa.me/5511958436421?text=Ol%C3%A1!%20Vim%20pelo%20site%20Adote%20um%20Amigo%20e%20gostaria%20de%20saber%20mais%20sobre%20a%20ado%C3%A7%C3%A3o%20de%20um%20pet." class="whatsapp-float" id="whatsappBtn" target="_blank" rel="noopener noreferrer" aria-label="Fale conosco no WhatsApp" title="Fale conosco no WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <!-- Rodapé do site -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-col footer-brand">
+        <div class="footer-logo">🐱 Adote um Amigo</div>
+        <p>Conectamos animais que precisam de um lar a pessoas que querem amar e cuidar. Adotar é um ato de carinho.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="#inicio">Início</a></li>
+          <li><a href="#catalogo">Catálogo</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <ul>
+          <li>📍 Rua dos Amigos, 178 – São Paulo, SP</li>
+          <li>📞 (11) 95843-6421</li>
+          <li>✉️ contato@adoteumamigo.com</li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Atendimento</h4>
+        <ul>
+          <li>Seg a Sex: 9h às 18h</li>
+          <li>Sáb e Dom: 9h às 14h</li>
+        </ul>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram">📷</a>
+          <a href="#" aria-label="Facebook">📘</a>
+          <a href="https://wa.me/5511958436421?text=Ol%C3%A1!%20Vim%20pelo%20site%20Adote%20um%20Amigo%20e%20gostaria%20de%20saber%20mais%20sobre%20a%20ado%C3%A7%C3%A3o%20de%20um%20pet." class="wpp" id="whatsappRodape" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">💬</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="ano"></span> Adote um Amigo - Adoção de Pets. Todos os direitos reservados.</p>
+    </div>
   </footer>
 
   <!-- Dados do catálogo embarcados (em projetos reais viria de uma API) -->
@@ -94,6 +254,20 @@
     ];
 
     window.LABEL_PRECO = "Idade:";
+
+    // ===== WhatsApp =====
+    // Número: 55 + DDD + número (sem espaços, parênteses ou traços)
+    window.WHATSAPP_NUMERO = "5511958436421";
+    window.WHATSAPP_MENSAGEM = "Olá! Vim pelo site Adote um Amigo e gostaria de saber mais sobre a adoção de um pet.";
+
+    (function () {
+      var link = "https://wa.me/" + window.WHATSAPP_NUMERO +
+                 "?text=" + encodeURIComponent(window.WHATSAPP_MENSAGEM);
+      var btn = document.getElementById("whatsappBtn");
+      var rodape = document.getElementById("whatsappRodape");
+      if (btn) btn.href = link;
+      if (rodape) rodape.href = link;
+    })();
   </script>
   <script src="script.js"></script>
 </body>
